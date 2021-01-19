@@ -1,0 +1,22 @@
+{
+  "name": "rectangles",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zcchew1202/rectangles.git"
+  },
+  "author": "zcchew1202",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zcchew1202/rectangles/issues"
+  },
+  "homepage": "https://github.com/zcchew1202/rectangles#readme",
+  "devDependencies": {
+    "mocha": "^8.2.1"
+  }
+}
