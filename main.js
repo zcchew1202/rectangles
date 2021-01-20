@@ -6,19 +6,37 @@ let topRight1 = new Point(6,9)
 let rectangleA = new Rectangle(bottomLeft1, topRight1);
 
 function getIntersect(rectangleA, rectangleB) {
-    leftIntersectX = Math.max(rectangleA.bottomLeft.x, rectangleB.bottomLeft.x);
-    leftIntersectY = Math.max(rectangleA.bottomLeft.y, rectangleB.bottomLeft.y);
+    // only works with normalized rectangles
+    const [rectangle1, rectangle2] = normalizeRectangles(rectangleA, rectangleB);
+    leftIntersectX = Math.max(rectangle1.bottomLeft.x, rectangle2.bottomLeft.x);
+    leftIntersectY = Math.max(rectangle1.bottomLeft.y, rectangle2.bottomLeft.y);
     leftIntersect = new Point(leftIntersectX, leftIntersectY);
     
-    rightIntersectX = Math.max(rectangleA.topRight.x, rectangleB.topRight.x);
-    rightIntersectY = Math.max(rectangleA.topRight.y, rectangleB.topRight.y);
+    rightIntersectX = Math.min(rectangle1.topRight.x, rectangle2.topRight.x);
+    rightIntersectY = Math.min(rectangle1.topRight.y, rectangle2.topRight.y);
     rightIntersect = new Point(rightIntersectX, rightIntersectY);
     // check if rectangles are adjacent
     if(validateRectangle(leftIntersect, rightIntersect)) {
         if(leftIntersect.x === rightIntersect.x || leftIntersect.y === rightIntersect.y) {
-            console.log("rectangles are adjacent!")
+            console.log("rectangles are adjacent!");
+            return null;
         }
+        return [leftIntersect, rightIntersect];
     }
+
+    return null;
 }
 
-module.exports = getIntersect;
+function normalizeRectangles(rectangleA, rectangleB) {
+    let bottomLeft1 = new Point(Math.min(rectangleA.bottomLeft.x, rectangleB.bottomLeft.x), Math.min(rectangleA.bottomLeft.y, rectangleB.bottomLeft.y));
+    let topRight1 = new Point(Math.min(rectangleA.topRight.x,rectangleB.topRight.x), Math.min(rectangleA.topRight.y,rectangleB.topRight.y));
+    let rectangle1 = new Rectangle(bottomLeft1, topRight1);
+
+    let bottomLeft2 = new Point(Math.max(rectangleA.bottomLeft.x, rectangleB.bottomLeft.x), Math.max(rectangleA.bottomLeft.y, rectangleB.bottomLeft.y));
+    let topRight2 = new Point(Math.max(rectangleA.topRight.x,rectangleB.topRight.x), Math.max(rectangleA.topRight.y,rectangleB.topRight.y));
+    let rectangle2 = new Rectangle(bottomLeft2, topRight2);
+    console.log([rectangle1, rectangle2])
+    return [rectangle1, rectangle2];
+}
+
+module.exports = {getIntersect: getIntersect};

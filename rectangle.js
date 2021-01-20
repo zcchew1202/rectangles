@@ -13,11 +13,11 @@ function validateRectangle(bottomLeft, topRight) {
     console.error("A point is undefined!");
     return false;
   }
-  if (!bottomLeft.x || !bottomLeft.y) {
+  if (typeof bottomLeft.x !== "number" || typeof bottomLeft.y !== "number") {
     console.error("Bottom left point is incomplete!");
     return false;
   }
-  if (!topRight.x || !topRight.y) {
+  if (typeof topRight.x !== "number" || typeof topRight.y !== "number") {
     console.error("Top right point is incomplete!");
     return false;
   }
