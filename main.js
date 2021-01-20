@@ -16,17 +16,22 @@ function getIntersect(rectangleA, rectangleB) {
     rightIntersectY = Math.min(rectangle1.topRight.y, rectangle2.topRight.y);
     rightIntersect = new Point(rightIntersectX, rightIntersectY);
     // check if rectangles are adjacent
+    let intersection = {};
     if(validateRectangle(leftIntersect, rightIntersect)) {
+        intersection.leftIntersect = leftIntersect;
+        intersection.rightIntersect = rightIntersect;
+        intersection.isAdjacent = false;
         if(leftIntersect.x === rightIntersect.x || leftIntersect.y === rightIntersect.y) {
             console.log("rectangles are adjacent!");
-            return null;
+            intersection.isAdjacent = true;
         }
-        return [leftIntersect, rightIntersect];
+        return intersection;
     }
-
+    console.log("No intersection found");
     return null;
 }
 
+// normalize rectangles such that points in rectangle1 < points in rectangle2
 function normalizeRectangles(rectangleA, rectangleB) {
     let bottomLeft1 = new Point(Math.min(rectangleA.bottomLeft.x, rectangleB.bottomLeft.x), Math.min(rectangleA.bottomLeft.y, rectangleB.bottomLeft.y));
     let topRight1 = new Point(Math.min(rectangleA.topRight.x,rectangleB.topRight.x), Math.min(rectangleA.topRight.y,rectangleB.topRight.y));
@@ -35,7 +40,6 @@ function normalizeRectangles(rectangleA, rectangleB) {
     let bottomLeft2 = new Point(Math.max(rectangleA.bottomLeft.x, rectangleB.bottomLeft.x), Math.max(rectangleA.bottomLeft.y, rectangleB.bottomLeft.y));
     let topRight2 = new Point(Math.max(rectangleA.topRight.x,rectangleB.topRight.x), Math.max(rectangleA.topRight.y,rectangleB.topRight.y));
     let rectangle2 = new Rectangle(bottomLeft2, topRight2);
-    console.log([rectangle1, rectangle2])
     return [rectangle1, rectangle2];
 }
 

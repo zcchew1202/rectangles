@@ -1,12 +1,20 @@
 class Rectangle {
   constructor(bottomLeft, topRight) {
     // check if points make valid rectangle
-    if(!validateRectangle(bottomLeft, topRight)) {
+    if (!validateRectangle(bottomLeft, topRight)) {
+      console.error("invalid rectangle")
       return -1;
     }
     this.bottomLeft = bottomLeft;
     this.topRight = topRight;
   }
+  // we assume contains includes the boundary, i.e the borders overlap
+  // also seems more intuitive to be relative, hence contains() being a class method
+  contains(Rectangle) {
+    return (this.bottomLeft.x <= Rectangle.bottomLeft.x && 
+    this.bottomLeft.y <= Rectangle.bottomLeft.y) &&
+    (this.topRight.x >= Rectangle.topRight.x && this.topRight.y >= Rectangle.topRight.y);
+}
 }
 function validateRectangle(bottomLeft, topRight) {
   if (!bottomLeft || !topRight) {
@@ -33,10 +41,10 @@ function validateRectangle(bottomLeft, topRight) {
   }
   // what if bottomLeft === topRight?
   if (bottomLeft.y === topRight.y && bottomLeft.x === topRight.x) {
-      console.error("The rectangles points are the same!")
-      return false;
+    console.error("The rectangles points are the same!")
+    return false;
   }
   return true;
 }
 
-module.exports = {Rectangle: Rectangle, validateRectangle: validateRectangle};
+module.exports = { Rectangle: Rectangle, validateRectangle: validateRectangle };
