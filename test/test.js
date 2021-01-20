@@ -6,8 +6,8 @@ const getIntersect = require("../main.js").getIntersect;
 
 describe("validate rectangle", function () {
     describe("1. undefined points", function () {
-        it("should return false when any input point is undefined", function () {
-            assert.strictEqual(validateRectangle(), false);
+        it("should return false when any input point is invalid", function () {
+            assert.isFalse(validateRectangle('asd',4));
         });
     });
     describe("2. x or y values are undefined", function () {
@@ -18,7 +18,17 @@ describe("validate rectangle", function () {
         });
         it("should return false when top right point is undefined", function () {
             let bottomLeft = new Point(2, 4);
-            let topRight = new Point(2, undefined);
+            let topRight = new Point(2, '');
+            assert.isFalse(validateRectangle(bottomLeft, topRight));
+        });
+        it("should return false when bottom left point is to the right of top right point", function () {
+            let bottomLeft = new Point(3, 4);
+            let topRight = new Point(2, 4);
+            assert.isFalse(validateRectangle(bottomLeft, topRight));
+        });
+        it("should return false when bottom left point shares coords with top right point", function () {
+            let bottomLeft = new Point(1, 4);
+            let topRight = new Point(2, 4);
             assert.isFalse(validateRectangle(bottomLeft, topRight));
         });
     });
@@ -27,6 +37,18 @@ describe("validate rectangle", function () {
             let bottomLeft = new Point(4, 2);
             let topRight = new Point(9, 7.1);
             assert.isTrue(validateRectangle(bottomLeft, topRight));
+        });
+    });
+    describe("4. Check intersection function", function () {
+        it("should return true when optional param is true", function () {
+            let bottomLeft = new Point(1, 4);
+            let topRight = new Point(2, 4);
+            assert.isTrue(validateRectangle(bottomLeft, topRight,true));
+        });
+        it("should return false when optional param is false", function () {
+            let bottomLeft = new Point(1, 4);
+            let topRight = new Point(2, 4);
+            assert.isFalse(validateRectangle(bottomLeft, topRight,false));
         });
     });
 });

@@ -17,7 +17,8 @@ function getIntersect(rectangleA, rectangleB) {
     rightIntersect = new Point(rightIntersectX, rightIntersectY);
     // check if rectangles are adjacent
     let intersection = {};
-    if(validateRectangle(leftIntersect, rightIntersect)) {
+    let checkIntersect = true;
+    if(validateRectangle(leftIntersect, rightIntersect, checkIntersect)) {
         intersection.leftIntersect = leftIntersect;
         intersection.rightIntersect = rightIntersect;
         intersection.isAdjacent = false;

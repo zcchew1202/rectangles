@@ -11,12 +11,13 @@ class Rectangle {
   // we assume contains includes the boundary, i.e the borders overlap
   // also seems more intuitive to be relative, hence contains() being a class method
   contains(Rectangle) {
-    return (this.bottomLeft.x <= Rectangle.bottomLeft.x && 
-    this.bottomLeft.y <= Rectangle.bottomLeft.y) &&
-    (this.topRight.x >= Rectangle.topRight.x && this.topRight.y >= Rectangle.topRight.y);
+    return (this.bottomLeft.x <= Rectangle.bottomLeft.x &&
+      this.bottomLeft.y <= Rectangle.bottomLeft.y) &&
+      (this.topRight.x >= Rectangle.topRight.x && this.topRight.y >= Rectangle.topRight.y);
+  }
 }
-}
-function validateRectangle(bottomLeft, topRight) {
+function validateRectangle(bottomLeft, topRight, checkIntersect) {
+  let checkIntersection = checkIntersect || false;
   if (!bottomLeft || !topRight) {
     console.error("A point is undefined!");
     return false;
@@ -39,9 +40,12 @@ function validateRectangle(bottomLeft, topRight) {
     console.error("Bottom left point is above the top right point!");
     return false;
   }
-  // what if bottomLeft === topRight?
-  if (bottomLeft.y === topRight.y && bottomLeft.x === topRight.x) {
-    console.error("The rectangles points are the same!")
+  // if the 2 points share coords, it's either a line or point, not a rectangle
+  if (bottomLeft.y === topRight.y || bottomLeft.x === topRight.x) {
+    console.error("The rectangles points are a line/point!")
+    if(checkIntersection) {
+      return true;
+    }
     return false;
   }
   return true;
