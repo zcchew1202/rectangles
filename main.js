@@ -4,6 +4,10 @@ const validateRectangle = require("./rectangle.js").validateRectangle;
 
 function getIntersect(rectangleA, rectangleB) {
     // only works with normalized rectangles
+    let intersection = {};
+    if( !rectangleA || !rectangleB || Object.keys(rectangleA).length === 0 || Object.keys(rectangleB).length === 0) {
+        return intersection;
+    }
     const [rectangle1, rectangle2] = normalizeRectangles(rectangleA, rectangleB);
     leftIntersectX = Math.max(rectangle1.bottomLeft.x, rectangle2.bottomLeft.x);
     leftIntersectY = Math.max(rectangle1.bottomLeft.y, rectangle2.bottomLeft.y);
@@ -13,7 +17,6 @@ function getIntersect(rectangleA, rectangleB) {
     rightIntersectY = Math.min(rectangle1.topRight.y, rectangle2.topRight.y);
     rightIntersect = new Point(rightIntersectX, rightIntersectY);
     // check if rectangles are adjacent
-    let intersection = {};
     let checkIntersect = true;
     if(validateRectangle(leftIntersect, rightIntersect, checkIntersect)) {
         intersection.leftIntersect = leftIntersect;
@@ -26,7 +29,7 @@ function getIntersect(rectangleA, rectangleB) {
         return intersection;
     }
     console.log("No intersection found");
-    return null;
+    return intersection;
 }
 
 // normalize rectangles such that points in rectangle1 < points in rectangle2

@@ -3,7 +3,7 @@ class Rectangle {
     // check if points make valid rectangle
     if (!validateRectangle(bottomLeft, topRight)) {
       console.error("invalid rectangle")
-      return -1;
+      return false;
     }
     this.bottomLeft = bottomLeft;
     this.topRight = topRight;

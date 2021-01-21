@@ -7,7 +7,7 @@ const getIntersect = require("../main.js").getIntersect;
 describe("validate rectangle", function () {
     describe("1. undefined points", function () {
         it("should return false when any input point is invalid", function () {
-            assert.isFalse(validateRectangle('asd',4));
+            assert.isFalse(validateRectangle("asd", 4));
         });
     });
     describe("2. x or y values are undefined", function () {
@@ -18,7 +18,7 @@ describe("validate rectangle", function () {
         });
         it("should return false when top right point is undefined", function () {
             let bottomLeft = new Point(2, 4);
-            let topRight = new Point(2, '');
+            let topRight = new Point(2, "");
             assert.isFalse(validateRectangle(bottomLeft, topRight));
         });
         it("should return false when bottom left point is to the right of top right point", function () {
@@ -43,12 +43,31 @@ describe("validate rectangle", function () {
         it("should return true when optional param is true", function () {
             let bottomLeft = new Point(1, 4);
             let topRight = new Point(2, 4);
-            assert.isTrue(validateRectangle(bottomLeft, topRight,true));
+            assert.isTrue(validateRectangle(bottomLeft, topRight, true));
         });
         it("should return false when optional param is false", function () {
             let bottomLeft = new Point(1, 4);
             let topRight = new Point(2, 4);
-            assert.isFalse(validateRectangle(bottomLeft, topRight,false));
+            assert.isFalse(validateRectangle(bottomLeft, topRight, false));
+        });
+    });
+});
+
+describe("Test Rectangle class", function () {
+    describe("1. rectangle is legit", function () {
+        it("should return true", function () {
+            let bottomLeft = new Point(4, 2);
+            let topRight = new Point(9, 7.1);
+            let rectangle = new Rectangle(bottomLeft, topRight);
+            assert.isNotEmpty(rectangle);
+        });
+    });
+    describe("2. rectangle is deformed", function () {
+        it("should return empty", function () {
+            let bottomLeft = new Point(4, 2);
+            let topRight = new Point("", 7.1);
+            let rectangle = new Rectangle(bottomLeft, topRight);
+            assert.isEmpty(rectangle);
         });
     });
 });
@@ -63,7 +82,10 @@ describe("get intersection points", function () {
             let bottomLeftB = new Point(1, 5);
             let topRightB = new Point(6, 10);
             let rectangleB = new Rectangle(bottomLeftB, topRightB);
-            assert.isFalse(getIntersect(rectangleA, rectangleB).isAdjacent, "no intersection found");
+            assert.isFalse(
+                getIntersect(rectangleA, rectangleB).isAdjacent,
+                "no intersection found"
+            );
         });
     });
     describe("2. rectangles don't intersect", function () {
@@ -75,7 +97,10 @@ describe("get intersection points", function () {
             let bottomLeftB = new Point(8, 0);
             let topRightB = new Point(16, 7);
             let rectangleB = new Rectangle(bottomLeftB, topRightB);
-            assert.isNull(getIntersect(rectangleA, rectangleB), "intersection found");
+            assert.isEmpty(
+                getIntersect(rectangleA, rectangleB),
+                "intersection found"
+            );
         });
     });
     describe("3. rectangles intersect and are adjacent", function () {
@@ -87,9 +112,22 @@ describe("get intersection points", function () {
             let bottomLeftB = new Point(9, 5);
             let topRightB = new Point(10, 10);
             let rectangleB = new Rectangle(bottomLeftB, topRightB);
-            assert.isTrue(getIntersect(rectangleA, rectangleB).isAdjacent, "adjacency found");
+            assert.isTrue(
+                getIntersect(rectangleA, rectangleB).isAdjacent,
+                "adjacency found"
+            );
+        });
+
+    });
+    describe("4. rectangles are empty or undefined -> {}", function () {
+        it("should return empty", function () {
+            assert.isEmpty(
+                getIntersect(undefined, {}),
+                "One of the rectangles is empty"
+            );
         });
     });
+});
 describe("Containment", function () {
     describe("1. rectangle contains another rectangle", function () {
         it("should return true", function () {
@@ -112,10 +150,10 @@ describe("Containment", function () {
             let bottomLeftB = new Point(9, 5);
             let topRightB = new Point(10, 10);
             let rectangleB = new Rectangle(bottomLeftB, topRightB);
-            assert.isFalse(rectangleA.contains(rectangleB), "rectangle A doesn't contain B");
+            assert.isFalse(
+                rectangleA.contains(rectangleB),
+                "rectangle A doesn't contain B"
+            );
         });
     });
-})
-
-    
 });
