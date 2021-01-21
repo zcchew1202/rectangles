@@ -1,5 +1,5 @@
 # rectangles
-Checks for intersections & containment between rectangles using classes
+Checks for intersections & containment between rectangles using classes \
 Simply clone/download this repo & copy `main.js`, `point.js`, `rectangle.js`to a directory of choice
 ## Usage
 ### Initialization
